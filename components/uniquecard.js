@@ -1,57 +1,58 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Modal, Alert } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Modal,
+  SafeAreaView,
+} from 'react-native';
 
-const UniqueCard = ({ title, userHand = null, dealerHand = null }) => {
+import DealerBoard from '../components/dealerBoard';
+
+/**
+ * UniqueCard
+ * @param {String} title The label of the card
+ * @param {array} userHand User hand of the game
+ * @param {array} dealerHand Dealer hand of the game
+ * @returns
+ */
+const UniqueCard = ({ title, userHand, dealerHand }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
-        transparent={true}
+        transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+        <SafeAreaView>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{title}</Text>
+              {dealerHand && <Text style={styles.modalText}>DealerHand</Text>}
+              {userHand && <Text style={styles.modalText}>Userhand</Text>}
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
+        </SafeAreaView>
       </Modal>
-      <View style={styles.cardContainer}>
-         <Pressable onPress={() => setModalVisible(true)}>
-           <Text>{`${title === '' ? '  +  ' : title}`}</Text>
-         </Pressable>
-       </View>
+      <Pressable onPress={() => setModalVisible(true)}>
+        <View style={styles.cardContainer}>
+          <Text>{`${title === '' ? '  +  ' : title}`}</Text>
+        </View>
+      </Pressable>
     </View>
   );
 };
-
-// /**
-//  * UniqueCard
-//  * @param {String} title The label of the card
-//  * @param {array} userHand User hand of the game
-//  * @param {array} dealerHand Dealer hand of the game
-//  * @returns
-//  */
-// const UniqueCard = ({ title, userHand = null, dealerHand = null }) => {
-//   return (
-//     <>
-//       <View style={styles.cardContainer}>
-//         <Pressable>
-//           <Text>{`${title === '' ? '  +  ' : title}`}</Text>
-//         </Pressable>
-//       </View>
-//     </>
-//   );
-// };
 
 export default UniqueCard;
 
@@ -83,18 +84,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalView: {
-    margin: 20,
+    margin: 0,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 10,
+    height: '100%',
     padding: 35,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
     elevation: 5,
   },
 });

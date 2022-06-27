@@ -21,6 +21,8 @@ import AppBar from './components/appbar';
 import DealerBoard from './components/dealerBoard';
 import UniqueCard from './components/uniquecard';
 import Results from './components/results';
+import Cards from './components/cards';
+
 
 const Section = ({ children, title }): Node => {
   return (
@@ -32,7 +34,7 @@ const Section = ({ children, title }): Node => {
 };
 
 const App: () => Node = () => {
-  let dealerHand = ['', '', '', '', ''];
+  let dealerHand = ['As', '', '', '', ''];
   let userHand = ['Ks', ''];
 
   return (
@@ -47,18 +49,19 @@ const App: () => Node = () => {
           <View>
             <Section title="Dealer Hand">
               <DealerBoard dealer={true}>
-                <UniqueCard title={dealerHand[0]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[1]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[2]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[3]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[4]} hand={dealerHand} />
+              
+                <UniqueCard title={dealerHand[0]} dealerHand={dealerHand} />
+                <UniqueCard title={dealerHand[1]} dealerHand={dealerHand} />
+                <UniqueCard title={dealerHand[2]} dealerHand={dealerHand} />
+                <UniqueCard title={dealerHand[3]} dealerHand={dealerHand} />
+                <UniqueCard title={dealerHand[4]} dealerHand={dealerHand} />
               </DealerBoard>
             </Section>
           </View>
           <Section title="Your cards">
             <DealerBoard>
-              <UniqueCard title={userHand[0]} hand={userHand} />
-              <UniqueCard title={userHand[1]} hand={userHand} />
+              <UniqueCard title={userHand[0]} userHand={userHand} />
+              <UniqueCard title={userHand[1]} userHand={userHand} />
             </DealerBoard>
           </Section>
           <Section title="Your chances">
