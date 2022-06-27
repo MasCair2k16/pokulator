@@ -18,7 +18,6 @@ import {
 } from 'react-native';
 
 import AppBar from './components/appbar';
-import DealerBoard from './components/dealerBoard';
 import Results from './components/results';
 import Cards from './components/cards';
 
@@ -32,8 +31,12 @@ const Section = ({ children, title }): Node => {
 };
 
 const App: () => Node = () => {
-  let dealerHand = ['As', '', '', '', ''];
-  let userHand = ['Ks', ''];
+  let dealerHand = ['As', '+', '+', '+', '+'];
+  let userHand = ['Ks', '+'];
+
+  const changeHand = (index, type = '') => {
+    dealerHand[index] = type;
+  };
 
   return (
     <SafeAreaView style={styles.backgroundColor}>
@@ -46,12 +49,12 @@ const App: () => Node = () => {
         <View style={[styles.backgroundColor]}>
           <View>
             <Section title="Dealer Hand">
-              <Cards dealerHand={dealerHand} />
+              <Cards dealerHand={dealerHand} changeHand={changeHand} />
             </Section>
           </View>
           <View>
             <Section title="Your cards">
-              <Cards userHand={userHand}/>
+              <Cards userHand={userHand} changeHand={changeHand} />
             </Section>
           </View>
           <Section title="Your chances">

@@ -11,6 +11,70 @@ import {
 import DealerBoard from '../components/dealerBoard';
 import UniqueCard from '../components/uniquecard';
 
+const ModalLayout = (Hand, changeHand) => {
+  const suites = [
+    { suite: 'Spades', abv: 's' },
+    { suite: 'Diamond', abv: 'd' },
+    { suite: 'Clubs', abv: 'c' },
+    { suite: 'Heart', abv: 'h' },
+  ];
+  // eslint-disable-next-line prettier/prettier
+  const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+  //EX: cardPicked, suite, number
+  const [selectedCard, setSelectedCard] = useState([false]);
+  return (
+    <>
+      <DealerBoard modal={true}>
+        {Hand.map((type, i) => {
+          return (
+            <Pressable onPress={() => setSelectedCard(Hand[i])}>
+              <UniqueCard title={Hand[i]} />
+            </Pressable>
+          );
+        })}
+      </DealerBoard>
+      {selectedCard[0] && (
+        <>
+          <Text>Choose a Suit</Text>
+          <DealerBoard modal={true}>
+            {suites.map((card, i) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    setSelectedCard(cardArray => [...cardArray, card[i].abv])
+                  }
+                >
+                  <UniqueCard title={card.suite} />
+                </Pressable>
+              );
+            })}
+          </DealerBoard>
+        </>
+      )}
+      {selectedCard[1] && (
+        <>
+          <Text>Pick a Number</Text>
+          <DealerBoard modal={true}>
+            {numbers.map((number, i) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    setSelectedCard(cardArray => [...cardArray, number])
+                  }
+                >
+                  <UniqueCard title={number} />
+                </Pressable>
+              );
+            })}
+          </DealerBoard>
+        </>
+      )}
+      {changeHand(selectedCard[0], 'HEllo')}
+    </>
+  );
+};
+
 /**
  * UniqueCard
  * @param {String} title The label of the card
@@ -18,7 +82,7 @@ import UniqueCard from '../components/uniquecard';
  * @param {array} dealerHand Dealer hand of the game
  * @returns
  */
-const Cards = ({ userHand, dealerHand }) => {
+const Cards = ({ userHand, dealerHand, changeHand }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
@@ -33,9 +97,9 @@ const Cards = ({ userHand, dealerHand }) => {
         <SafeAreaView>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              {/* <Text style={styles.modalText}>{title}</Text>
-              {dealerHand && <Text style={styles.modalText}>DealerHand</Text>}
-              {userHand && <Text style={styles.modalText}>Userhand</Text>} */}
+              <Text>Choose a Card</Text>
+              {dealerHand && ModalLayout(dealerHand, changeHand)}
+              {userHand && ModalLayout(userHand, changeHand)}
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -82,18 +146,11 @@ const Cards = ({ userHand, dealerHand }) => {
 export default Cards;
 
 const styles = StyleSheet.create({
-  bottom: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
   cardContainer: {
     backgroundColor: 'white',
     width: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    // padding: 15,
     marginLeft: 5,
     marginRight: 5,
     paddingTop: 35,
