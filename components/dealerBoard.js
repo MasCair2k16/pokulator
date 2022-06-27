@@ -9,26 +9,24 @@ export default DealerBoard;
 
 const styles = StyleSheet.create({
   border: {
-    flex: 1,
     backgroundColor: '#4F5D2F',
     borderWidth: 2,
     borderColor: 'white',
     borderRadius: 10,
     marginTop: 20,
-    marginBottom: 15,
-    padding: 50,
-    paddingLeft: 100,
-    paddingRight: 100,
+    marginBottom: 5,
+    padding: 15,
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
   },
   noBorder: {
     flex: 1,
     backgroundColor: '#4F5D2F',
     borderColor: '#4F5D2F',
     borderWidth: 2,
-    marginTop: 20,
-    marginBottom: 15,
-    padding: 50,
-    paddingLeft: 45,
-    paddingRight: 45,
+    marginBottom: 5,
+    padding: 25,
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
   }
 });
