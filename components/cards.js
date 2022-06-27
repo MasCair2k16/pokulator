@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,12 +6,13 @@ import {
   Pressable,
   Modal,
   SafeAreaView,
+  Button,
 } from 'react-native';
 
 import DealerBoard from '../components/dealerBoard';
 import UniqueCard from '../components/uniquecard';
 
-const ModalLayout = (Hand, changeHand) => {
+const ModalLayout = (Hand, updateHand) => {
   const suites = [
     { suite: 'Spades', abv: 's' },
     { suite: 'Diamond', abv: 'd' },
@@ -22,14 +23,24 @@ const ModalLayout = (Hand, changeHand) => {
   const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
   //EX: cardPicked, suite, number
-  const [selectedCard, setSelectedCard] = useState([false]);
+  const [selectedCard, setSelectedCard] = useState([]);
+
+  /**
+   * handChange Card makes a clone of current Hand, add value by index, update new clone
+   */
+  const handleChangeCard = () => {
+    const userCards = [...Hand];
+    userCards[selectedCard[0]] = `${selectedCard[2]}${selectedCard[1]}`;
+    updateHand(userCards);
+    console.log(selectedCard);
+  };
   return (
     <>
       <DealerBoard modal={true}>
         {Hand.map((type, i) => {
           return (
-            <Pressable onPress={() => setSelectedCard(Hand[i])}>
-              <UniqueCard title={Hand[i]} />
+            <Pressable onPress={() => setSelectedCard(`${i}`)}>
+              <UniqueCard title={Hand[i]} key={type} />
             </Pressable>
           );
         })}
@@ -38,14 +49,14 @@ const ModalLayout = (Hand, changeHand) => {
         <>
           <Text>Choose a Suit</Text>
           <DealerBoard modal={true}>
-            {suites.map((card, i) => {
+            {suites.map(card => {
               return (
                 <Pressable
                   onPress={() =>
-                    setSelectedCard(cardArray => [...cardArray, card[i].abv])
+                    setSelectedCard(cardArray => [...cardArray, card.abv])
                   }
                 >
-                  <UniqueCard title={card.suite} />
+                  <UniqueCard title={card.suite} key={card.abv} />
                 </Pressable>
               );
             })}
@@ -63,14 +74,19 @@ const ModalLayout = (Hand, changeHand) => {
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
                 >
-                  <UniqueCard title={number} />
+                  <UniqueCard title={number} key={number} />
                 </Pressable>
               );
             })}
           </DealerBoard>
         </>
       )}
-      {changeHand(selectedCard[0], 'HEllo')}
+      <Button
+        onPress={handleChangeCard}
+        title="Done"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
     </>
   );
 };
@@ -82,8 +98,9 @@ const ModalLayout = (Hand, changeHand) => {
  * @param {array} dealerHand Dealer hand of the game
  * @returns
  */
-const Cards = ({ userHand, dealerHand, changeHand }) => {
+const Cards = ({ userHand, dealerHand, updateHand }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -98,8 +115,8 @@ const Cards = ({ userHand, dealerHand, changeHand }) => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text>Choose a Card</Text>
-              {dealerHand && ModalLayout(dealerHand, changeHand)}
-              {userHand && ModalLayout(userHand, changeHand)}
+              {dealerHand && ModalLayout(dealerHand, updateHand)}
+              {userHand && ModalLayout(userHand, updateHand)}
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -157,9 +174,6 @@ const styles = StyleSheet.create({
     paddingBottom: 35,
     borderRadius: 5,
     shadowColor: '#171717',
-    // shadowOffset: { height: 7 },
-    // shadowOpacity: 0.6,
-    // shadowRadius: 6,
   },
   modalText: {
     marginBottom: 15,
@@ -172,13 +186,6 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 35,
     alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
     elevation: 5,
   },
 });

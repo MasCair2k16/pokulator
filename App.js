@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Node } from 'react';
 import {
   SafeAreaView,
@@ -31,12 +31,21 @@ const Section = ({ children, title }): Node => {
 };
 
 const App: () => Node = () => {
-  let dealerHand = ['As', '+', '+', '+', '+'];
-  let userHand = ['Ks', '+'];
+  const [dealerHand, setDealerHand] = useState(['+', '+', '+', '+', '+']);
+  const [userHand, setUserHand] = useState(['+', '+']);
 
-  const changeHand = (index, type = '') => {
-    dealerHand[index] = type;
+  const updateHand = (value, index, typeHand) => {
+    if (typeHand === 'userHand') {
+      const userCards = [...userHand];
+      userCards[0][index] = value;
+      setUserhand(userCards);
+    } else {
+
+    }
+
   };
+
+  console.log(dealerHand);
 
   return (
     <SafeAreaView style={styles.backgroundColor}>
@@ -49,12 +58,12 @@ const App: () => Node = () => {
         <View style={[styles.backgroundColor]}>
           <View>
             <Section title="Dealer Hand">
-              <Cards dealerHand={dealerHand} changeHand={changeHand} />
+              <Cards dealerHand={dealerHand} updateHand={setDealerHand} />
             </Section>
           </View>
           <View>
             <Section title="Your cards">
-              <Cards userHand={userHand} changeHand={changeHand} />
+              <Cards userHand={userHand} updateHand={setUserHand} />
             </Section>
           </View>
           <Section title="Your chances">
