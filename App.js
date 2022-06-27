@@ -14,16 +14,13 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
 import AppBar from './components/appbar';
 import DealerBoard from './components/dealerBoard';
-import UniqueCards from './components/uniquecards';
-import Cards from './components/cards';
-
-import { Colors, DebugInstructions } from 'react-native/Libraries/NewAppScreen';
+import UniqueCard from './components/uniquecard';
+import Results from './components/results';
 
 const Section = ({ children, title }): Node => {
   return (
@@ -35,6 +32,8 @@ const Section = ({ children, title }): Node => {
 };
 
 const App: () => Node = () => {
+  let dealerHand = ['', '', '', '', ''];
+  let userHand = ['Ks', ''];
 
   return (
     <SafeAreaView style={styles.backgroundColor}>
@@ -42,23 +41,28 @@ const App: () => Node = () => {
       <AppBar title="Your calculator" />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={styles.backgroundColor}
+        style={styles.scrollBehaviour}
       >
         <View style={[styles.backgroundColor]}>
           <View>
             <Section title="Dealer Hand">
               <DealerBoard dealer={true}>
-                <Text>Cards</Text>
+                <UniqueCard title={dealerHand[0]} hand={dealerHand} />
+                <UniqueCard title={dealerHand[1]} hand={dealerHand} />
+                <UniqueCard title={dealerHand[2]} hand={dealerHand} />
+                <UniqueCard title={dealerHand[3]} hand={dealerHand} />
+                <UniqueCard title={dealerHand[4]} hand={dealerHand} />
               </DealerBoard>
             </Section>
           </View>
           <Section title="Your cards">
             <DealerBoard>
-              <Text>Your Cards</Text>
+              <UniqueCard title={userHand[0]} hand={userHand} />
+              <UniqueCard title={userHand[1]} hand={userHand} />
             </DealerBoard>
           </Section>
           <Section title="Your chances">
-            <DebugInstructions />
+            <Results data={null} />
           </Section>
         </View>
       </ScrollView>
@@ -68,8 +72,11 @@ const App: () => Node = () => {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop: 24,
+    marginTop: 12,
     paddingHorizontal: 24,
+  },
+  scrollBehaviour: {
+    backgroundColor: '#4F5D2F',
   },
   backgroundColor: {
     backgroundColor: '#4F5D2F',
