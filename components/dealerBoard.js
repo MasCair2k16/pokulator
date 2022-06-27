@@ -20,13 +20,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   noBorder: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#4F5D2F',
     borderColor: '#4F5D2F',
     borderWidth: 2,
+    marginTop: 5,
     marginBottom: 5,
-    padding: 25,
+    padding: 5,
     justifyContent: 'space-evenly',
     flexDirection: 'row',
-  }
+  },
 });

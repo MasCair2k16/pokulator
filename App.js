@@ -19,10 +19,8 @@ import {
 
 import AppBar from './components/appbar';
 import DealerBoard from './components/dealerBoard';
-import UniqueCard from './components/uniquecard';
 import Results from './components/results';
 import Cards from './components/cards';
-
 
 const Section = ({ children, title }): Node => {
   return (
@@ -48,22 +46,14 @@ const App: () => Node = () => {
         <View style={[styles.backgroundColor]}>
           <View>
             <Section title="Dealer Hand">
-              <DealerBoard dealer={true}>
-              
-                <UniqueCard title={dealerHand[0]} dealerHand={dealerHand} />
-                <UniqueCard title={dealerHand[1]} dealerHand={dealerHand} />
-                <UniqueCard title={dealerHand[2]} dealerHand={dealerHand} />
-                <UniqueCard title={dealerHand[3]} dealerHand={dealerHand} />
-                <UniqueCard title={dealerHand[4]} dealerHand={dealerHand} />
-              </DealerBoard>
+              <Cards dealerHand={dealerHand} />
             </Section>
           </View>
-          <Section title="Your cards">
-            <DealerBoard>
-              <UniqueCard title={userHand[0]} userHand={userHand} />
-              <UniqueCard title={userHand[1]} userHand={userHand} />
-            </DealerBoard>
-          </Section>
+          <View>
+            <Section title="Your cards">
+              <Cards userHand={userHand}/>
+            </Section>
+          </View>
           <Section title="Your chances">
             <Results data={null} />
           </Section>

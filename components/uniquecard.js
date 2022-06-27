@@ -1,14 +1,5 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  Modal,
-  SafeAreaView,
-} from 'react-native';
-
-import DealerBoard from '../components/dealerBoard';
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 
 /**
  * UniqueCard
@@ -17,39 +8,10 @@ import DealerBoard from '../components/dealerBoard';
  * @param {array} dealerHand Dealer hand of the game
  * @returns
  */
-const UniqueCard = ({ title, userHand, dealerHand }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+const UniqueCard = ({ title }) => {
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <SafeAreaView>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>{title}</Text>
-              {dealerHand && <Text style={styles.modalText}>DealerHand</Text>}
-              {userHand && <Text style={styles.modalText}>Userhand</Text>}
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
-            </View>
-          </View>
-        </SafeAreaView>
-      </Modal>
-      <Pressable onPress={() => setModalVisible(true)}>
-        <View style={styles.cardContainer}>
-          <Text>{`${title === '' ? '  +  ' : title}`}</Text>
-        </View>
-      </Pressable>
+    <View style={styles.cardContainer}>
+      <Text>{`${title === '' ? '  +  ' : title}`}</Text>
     </View>
   );
 };
@@ -57,12 +19,6 @@ const UniqueCard = ({ title, userHand, dealerHand }) => {
 export default UniqueCard;
 
 const styles = StyleSheet.create({
-  bottom: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
   cardContainer: {
     backgroundColor: 'white',
     width: 55,
@@ -78,25 +34,5 @@ const styles = StyleSheet.create({
     // shadowOffset: { height: 7 },
     // shadowOpacity: 0.6,
     // shadowRadius: 6,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  modalView: {
-    margin: 0,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    height: '100%',
-    padding: 35,
-    alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    elevation: 5,
   },
 });

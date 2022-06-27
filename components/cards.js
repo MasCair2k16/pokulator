@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import DealerBoard from '../components/dealerBoard';
+import UniqueCard from '../components/uniquecard';
 
 /**
  * UniqueCard
@@ -17,7 +18,7 @@ import DealerBoard from '../components/dealerBoard';
  * @param {array} dealerHand Dealer hand of the game
  * @returns
  */
-const Cards = ({ title, userHand, dealerHand }) => {
+const Cards = ({ userHand, dealerHand }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.centeredView}>
@@ -32,9 +33,9 @@ const Cards = ({ title, userHand, dealerHand }) => {
         <SafeAreaView>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{title}</Text>
+              {/* <Text style={styles.modalText}>{title}</Text>
               {dealerHand && <Text style={styles.modalText}>DealerHand</Text>}
-              {userHand && <Text style={styles.modalText}>Userhand</Text>}
+              {userHand && <Text style={styles.modalText}>Userhand</Text>} */}
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -45,11 +46,35 @@ const Cards = ({ title, userHand, dealerHand }) => {
           </View>
         </SafeAreaView>
       </Modal>
-      <Pressable onPress={() => setModalVisible(true)}>
-        <View style={styles.cardContainer}>
-          <Text>{`${title === '' ? '  +  ' : title}`}</Text>
-        </View>
-      </Pressable>
+      {dealerHand && (
+        <DealerBoard dealer={true}>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <UniqueCard title={dealerHand[0]} dealerHand={dealerHand} />
+          </Pressable>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <UniqueCard title={dealerHand[1]} dealerHand={dealerHand} />
+          </Pressable>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <UniqueCard title={dealerHand[2]} dealerHand={dealerHand} />
+          </Pressable>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <UniqueCard title={dealerHand[3]} dealerHand={dealerHand} />
+          </Pressable>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <UniqueCard title={dealerHand[4]} dealerHand={dealerHand} />
+          </Pressable>
+        </DealerBoard>
+      )}
+      {userHand && (
+        <DealerBoard>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <UniqueCard title={userHand[0]} />
+          </Pressable>
+          <Pressable onPress={() => setModalVisible(true)}>
+            <UniqueCard title={userHand[1]} />
+          </Pressable>
+        </DealerBoard>
+      )}
     </View>
   );
 };
