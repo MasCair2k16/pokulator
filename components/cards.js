@@ -26,13 +26,14 @@ const ModalLayout = (Hand, updateHand) => {
   const [selectedCard, setSelectedCard] = useState([]);
 
   /**
-   * handChange Card makes a clone of current Hand, add value by index, update new clone
+   * handChange Card makes a clone of current Hand, add value by index, update new clone to state
    */
   const handleChangeCard = () => {
     const userCards = [...Hand];
     userCards[selectedCard[0]] = `${selectedCard[2]}${selectedCard[1]}`;
     updateHand(userCards);
     console.log(selectedCard);
+    setSelectedCard([]);
   };
   return (
     <>
@@ -81,12 +82,14 @@ const ModalLayout = (Hand, updateHand) => {
           </DealerBoard>
         </>
       )}
-      <Button
-        onPress={handleChangeCard}
-        title="Done"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
+      {selectedCard[2] && (
+        <Button
+          onPress={handleChangeCard}
+          title="Add Card"
+          color="#841584"
+          accessibilityLabel="Add Card"
+        />
+      )}
     </>
   );
 };
