@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     top: 24,
     borderRadius: 5,
     marginBottom: 12,
-    height: 150,
     width: '100%',
+    height: 250,
   },
   percentage: {
     justifyContent: 'center',

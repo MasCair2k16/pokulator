@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { Node } from 'react';
 import {
   SafeAreaView,
@@ -15,12 +15,12 @@ import {
   StyleSheet,
   Text,
   View,
+  Pressable,
 } from 'react-native';
 
 import AppBar from './components/appbar';
-import DealerBoard from './components/dealerBoard';
-import UniqueCard from './components/uniquecard';
 import Results from './components/results';
+import Cards from './components/cards';
 
 const Section = ({ children, title }): Node => {
   return (
@@ -32,8 +32,8 @@ const Section = ({ children, title }): Node => {
 };
 
 const App: () => Node = () => {
-  let dealerHand = ['', '', '', '', ''];
-  let userHand = ['Ks', ''];
+  const [dealerHand, setDealerHand] = useState(['+', '+', '+', '+', '+']);
+  const [userHand, setUserHand] = useState(['+', '+']);
 
   return (
     <SafeAreaView style={styles.backgroundColor}>
@@ -45,22 +45,27 @@ const App: () => Node = () => {
       >
         <View style={[styles.backgroundColor]}>
           <View>
-            <Section title="Dealer Hand">
-              <DealerBoard dealer={true}>
-                <UniqueCard title={dealerHand[0]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[1]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[2]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[3]} hand={dealerHand} />
-                <UniqueCard title={dealerHand[4]} hand={dealerHand} />
-              </DealerBoard>
+            <Section title="Dealer hand">
+              <Cards dealerHand={dealerHand} updateHand={setDealerHand} />
+              <Pressable
+                onPress={() => setDealerHand(['+', '+', '+', '+', '+'])}
+              >
+                <Text style={styles.clearBoard}>Clear Board</Text>
+              </Pressable>
             </Section>
           </View>
-          <Section title="Your cards">
-            <DealerBoard>
-              <UniqueCard title={userHand[0]} hand={userHand} />
-              <UniqueCard title={userHand[1]} hand={userHand} />
-            </DealerBoard>
-          </Section>
+          <View>
+            <Section title="Your cards">
+              <Cards userHand={userHand} updateHand={setUserHand} />
+              <Pressable
+                onPress={() => {
+                  return setUserHand(['+', '+']);
+                }}
+              >
+                <Text style={styles.clearBoard}>Clear Board</Text>
+              </Pressable>
+            </Section>
+          </View>
           <Section title="Your chances">
             <Results data={null} />
           </Section>
@@ -80,6 +85,11 @@ const styles = StyleSheet.create({
   },
   backgroundColor: {
     backgroundColor: '#4F5D2F',
+  },
+  clearBoard: {
+    color: 'white',
+    fontSize: 14,
+    top: 5,
   },
   sectionTitle: {
     fontSize: 24,
