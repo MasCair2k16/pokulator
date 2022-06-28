@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import type { Node } from 'react';
 import {
   SafeAreaView,
@@ -15,6 +15,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Pressable,
 } from 'react-native';
 
 import AppBar from './components/appbar';
@@ -34,19 +35,6 @@ const App: () => Node = () => {
   const [dealerHand, setDealerHand] = useState(['+', '+', '+', '+', '+']);
   const [userHand, setUserHand] = useState(['+', '+']);
 
-  const updateHand = (value, index, typeHand) => {
-    if (typeHand === 'userHand') {
-      const userCards = [...userHand];
-      userCards[0][index] = value;
-      setUserhand(userCards);
-    } else {
-
-    }
-
-  };
-
-  console.log(dealerHand);
-
   return (
     <SafeAreaView style={styles.backgroundColor}>
       <StatusBar barStyle={'dark-content'} />
@@ -57,13 +45,25 @@ const App: () => Node = () => {
       >
         <View style={[styles.backgroundColor]}>
           <View>
-            <Section title="Dealer Hand">
+            <Section title="Dealer hand">
               <Cards dealerHand={dealerHand} updateHand={setDealerHand} />
+              <Pressable
+                onPress={() => setDealerHand(['+', '+', '+', '+', '+'])}
+              >
+                <Text style={styles.clearBoard}>Clear Board</Text>
+              </Pressable>
             </Section>
           </View>
           <View>
             <Section title="Your cards">
               <Cards userHand={userHand} updateHand={setUserHand} />
+              <Pressable
+                onPress={() => {
+                  return setUserHand(['+', '+']);
+                }}
+              >
+                <Text style={styles.clearBoard}>Clear Board</Text>
+              </Pressable>
             </Section>
           </View>
           <Section title="Your chances">
@@ -85,6 +85,11 @@ const styles = StyleSheet.create({
   },
   backgroundColor: {
     backgroundColor: '#4F5D2F',
+  },
+  clearBoard: {
+    color: 'white',
+    fontSize: 14,
+    top: 5,
   },
   sectionTitle: {
     fontSize: 24,
