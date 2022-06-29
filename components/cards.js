@@ -14,13 +14,13 @@ import UniqueCard from '../components/uniquecard';
 
 const ModalLayout = (Hand, updateHand) => {
   const suites = [
-    { suite: 'Spades', abv: 's' },
-    { suite: 'Diamond', abv: 'd' },
-    { suite: 'Clubs', abv: 'c' },
-    { suite: 'Heart', abv: 'h' },
+    { suite: 'spades', abv: 'S' },
+    { suite: 'diamonds', abv: 'D' },
+    { suite: 'clubs', abv: 'C' },
+    { suite: 'hearts', abv: 'H' },
   ];
   // eslint-disable-next-line prettier/prettier
-  const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+  const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 
   //EX: cardPicked, suite, number
   const [selectedCard, setSelectedCard] = useState([]);
@@ -75,7 +75,7 @@ const ModalLayout = (Hand, updateHand) => {
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
                 >
-                  <UniqueCard title={number} key={number} />
+                  <UniqueCard title={number} key={i} />
                 </Pressable>
               );
             })}
