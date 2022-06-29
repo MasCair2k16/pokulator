@@ -1,30 +1,49 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-
+import { TexasHoldem } from '../node_modules/poker-odds-calc/dist/index.js';
 const winPercentage = 64;
-const parseresults = data => {
-  if (data === null) {
-    return 'results';
-  }
+
+const Results = ({ userHand, dealerHand }) => {
+  // const Table = new TexasHoldem();
+  // try {
+  //   Table.addPlayer(userHand);
+  //   Table.addPlayer(['Th', '3h']);
+  //   Table.setBoard(dealerHand);
+  // } catch (error) {
+  //   console.log(error)
+  // }
+
+  // let results = Table.calculate();
+  // results.getPlayers().forEach(player => {
+  //   console.log(`${player.getName()} - ${player.getHand()} - Wins: ${player.getWinsPercentageString()} - Ties: ${player.getTiesPercentageString()}`);
+  // });
+  // console.log(results);
+  let results = null;
+  const parseresults = () => {
+    if (results === null) {
+      ('results');
+    }
+  };
+
+  // useEffect(() => {}, [results]);
+  return (
+    <>
+      <View style={styles.firstRow}>
+        <View style={styles.color}>
+          <Text>Best Play</Text>
+          <Text>{parseresults}</Text>
+        </View>
+        <View style={styles.percentage}>
+          <Text style={styles.win}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+      </View>
+      <View style={styles.secondRow}>
+        <Text>Other plays</Text>
+      </View>
+    </>
+  );
 };
-const Results = ({ data = null }) => (
-  <>
-    <View style={styles.firstRow}>
-      <View style={styles.color}>
-        <Text>Best Play</Text>
-        <Text>{parseresults(data)}</Text>
-      </View>
-      <View style={styles.percentage}>
-        <Text style={styles.win}>Win Percentage</Text>
-        <Text style={styles.winPercentage}>{winPercentage}%</Text>
-      </View>
-    </View>
-    <View style={styles.secondRow}>
-      <Text>Other plays</Text>
-      <Text>{parseresults(data)}</Text>
-    </View>
-  </>
-);
 
 export default Results;
 

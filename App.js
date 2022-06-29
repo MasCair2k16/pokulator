@@ -8,6 +8,7 @@
 
 import React, { useState } from 'react';
 import type { Node } from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -67,7 +68,7 @@ const App: () => Node = () => {
             </Section>
           </View>
           <Section title="Your chances">
-            <Results data={null} />
+            <Results dealerHand={dealerHand} userHand={userHand} />
           </Section>
         </View>
       </ScrollView>
