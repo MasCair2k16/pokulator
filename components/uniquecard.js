@@ -10,6 +10,7 @@ import { StyleSheet, View, Text, Image } from 'react-native';
  */
 const UniqueCard = ({ title }) => {
   // const staticImage = require(`../image/PNG-cards-1.3/2C.png`)
+  // let staticImage = require(`../image/PNG-cards-1.3/${title}.png`);
 
   return (
     <>
@@ -22,7 +23,8 @@ const UniqueCard = ({ title }) => {
         <View style={styles.cardContainer}>
           <Image
             style={styles.cardFace}
-            source={require('../image/PNG-cards-1.3/AC.png')}
+            // source={require(`../image/PNG-cards-1.3/${title}.png`)}
+            // source={title}
           />
         </View>
       )}
@@ -41,8 +43,8 @@ const styles = StyleSheet.create({
     // padding: 15,
     marginLeft: 5,
     marginRight: 5,
-    paddingTop: 36,
-    paddingBottom: 37,
+    paddingTop: 35,
+    paddingBottom: 35,
     borderRadius: 2,
     shadowColor: '#171717',
     shadowOffset: { height: 7 },
@@ -52,16 +54,21 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
     width: 60,
+    height: 87,
+    // paddingTop: -1,
+    // paddingLeft: 5,
+    paddingRight: 1,
     marginLeft: 5,
     marginRight: 5,
     borderRadius: 5,
     shadowColor: '#171717',
     shadowOffset: { height: 7 },
     shadowOpacity: 0.6,
-    shadowRadius: 6,
+    shadowRadius: 4,
   },
   cardFace: {
     width: 60,
-    height: 90,
+    height: 87,
+    borderRadius: 1,
   },
 });

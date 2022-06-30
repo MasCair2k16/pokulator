@@ -5,13 +5,13 @@ const winPercentage = 64;
 
 const Results = ({ userHand, dealerHand }) => {
   // const Table = new TexasHoldem();
-  // try {
-  //   Table.addPlayer(userHand);
-  //   Table.addPlayer(['Th', '3h']);
+  // // try {
+  //   Table.addPlayer(['5h', '5d']);
+  //   Table.addPlayer(['9h', '3h']);
   //   Table.setBoard(dealerHand);
-  // } catch (error) {
-  //   console.log(error)
-  // }
+  // // } catch (error) {
+  // //   console.log(error)
+  // // }
 
   // let results = Table.calculate();
   // results.getPlayers().forEach(player => {
