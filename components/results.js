@@ -31,7 +31,7 @@ const Results = ({ userHand, dealerHand }) => {
       <View style={styles.firstRow}>
         <View style={styles.color}>
           <Text>Best Play</Text>
-          <Text>{parseresults}</Text>
+          {/* <Text>{parseresults}</Text> */}
         </View>
         <View style={styles.percentage}>
           <Text style={styles.win}>Win Percentage</Text>

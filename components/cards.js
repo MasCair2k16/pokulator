@@ -20,7 +20,7 @@ const ModalLayout = (Hand, updateHand) => {
     { suite: 'hearts', abv: 'h' },
   ];
   // eslint-disable-next-line prettier/prettier
-  const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+  const numbers = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 
   //EX: cardPicked, suite, number
   const [selectedCard, setSelectedCard] = useState([]);
@@ -32,7 +32,6 @@ const ModalLayout = (Hand, updateHand) => {
     const userCards = [...Hand];
     userCards[selectedCard[0]] = `${selectedCard[2]}${selectedCard[1]}`;
     updateHand(userCards);
-    console.log(selectedCard);
     setSelectedCard([]);
   };
   return (
@@ -57,7 +56,7 @@ const ModalLayout = (Hand, updateHand) => {
                     setSelectedCard(cardArray => [...cardArray, card.abv])
                   }
                 >
-                  <UniqueCard title={require(`../image/PNG-cards-1.3/${card.suite}.png`)} key={card.abv} />
+                  <UniqueCard title={card.suite} key={card.abv} />
                 </Pressable>
               );
             })}
@@ -75,7 +74,7 @@ const ModalLayout = (Hand, updateHand) => {
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
                 >
-                  <UniqueCard title={number} key={i} />
+                  <UniqueCard title={number} key={i} onlyNumbers={true} />
                 </Pressable>
               );
             })}

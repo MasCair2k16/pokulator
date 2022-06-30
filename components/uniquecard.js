@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
+import CardCovers from '../assests/cardList/cardList';
 
 /**
  * UniqueCard
@@ -8,24 +9,27 @@ import { StyleSheet, View, Text, Image } from 'react-native';
  * @param {array} dealerHand Dealer hand of the game
  * @returns
  */
-const UniqueCard = ({ title }) => {
-  // const staticImage = require(`../image/PNG-cards-1.3/2C.png`)
-  // let staticImage = require(`../image/PNG-cards-1.3/${title}.png`);
+const UniqueCard = ({ title, onlyNumbers = false }) => {
+  const image = CardCovers.find(obj => obj.name === title);
 
   return (
     <>
-      {title === '+' && (
+      {/* Prints Plus sign */}
+      {title === '+' && !onlyNumbers && (
         <View style={styles.emptyCard}>
           <Text>&#43;</Text>
         </View>
       )}
-      {title !== '+' && (
+      {/* Prints cardCovers */}
+      {title !== '+' && !onlyNumbers && (
         <View style={styles.cardContainer}>
-          <Image
-            style={styles.cardFace}
-            // source={require(`../image/PNG-cards-1.3/${title}.png`)}
-            // source={title}
-          />
+          <Image style={styles.cardFace} source={image.src} />
+        </View>
+      )}
+      {/* Prints only numbers */}
+      {onlyNumbers && (
+        <View style={styles.emptyCard}>
+          <Text>{title}</Text>
         </View>
       )}
     </>
