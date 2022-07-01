@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Button } from 'react-native';
 import { TexasHoldem } from '../node_modules/poker-odds-calc/dist/index.js';
 const winPercentage = 64;
 
@@ -29,17 +29,119 @@ const Results = ({ userHand, dealerHand }) => {
   return (
     <>
       <View style={styles.firstRow}>
-        <View style={styles.color}>
-          <Text>Best Play</Text>
-          {/* <Text>{parseresults}</Text> */}
-        </View>
         <View style={styles.percentage}>
-          <Text style={styles.win}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text
+            style={
+              winPercentage > 60 ? styles.winPercentage : styles.winPercentage
+            }
+          >
+            {winPercentage}%
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Two Pair</Text>
         </View>
       </View>
-      <View style={styles.secondRow}>
-        <Text>Other plays</Text>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>High Card</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Three of a kind</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Straight</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Flush</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Full House</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Royal Flush</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Four of a Kind</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Straight Flush</Text>
+        </View>
+      </View>
+
+      <View style={styles.firstRow}>
+        <View style={styles.percentage}>
+          <Text style={styles.winString}>Win Percentage</Text>
+          <Text style={styles.winPercentage}>{winPercentage}%</Text>
+        </View>
+        <View>
+          <Text style={styles.winHandString}>Hand</Text>
+          <Text style={styles.winHand}>Royal Flush</Text>
+        </View>
       </View>
     </>
   );
@@ -53,12 +155,17 @@ const styles = StyleSheet.create({
     top: 24,
     borderRadius: 5,
     marginBottom: 12,
-    height: 150,
+    height: 15,
+    width: 150,
   },
   firstRow: {
-    justifyContent: 'space-evenly',
+    // justifyContent: 'space-evenly',
     flexDirection: 'row',
+    backgroundColor: 'white',
     width: '100%',
+    marginTop: 7,
+    padding: 10,
+    borderRadius: 5,
   },
   secondRow: {
     backgroundColor: 'white',
@@ -69,14 +176,33 @@ const styles = StyleSheet.create({
     height: 250,
   },
   percentage: {
+    marginTop: 0,
     justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'column',
-    left: 30,
+  },
+  winString: {
+    color: 'black',
+    FontWeight: 'bold',
+    fontWeight: '600',
+    fontSize: 18,
   },
   winPercentage: {
-    fontSize: 24,
+    fontSize: 22,
+    fontWeight: '300',
+    color: 'black',
+  },
+  winHand: {
+    fontSize: 22,
+    fontWeight: '300',
+    color: 'black',
+    marginLeft: 10,
+  },
+  winHandString: {
+    marginTop: 0,
+    color: 'black',
+    marginLeft: 0,
+    fontSize: 18,
     fontWeight: '600',
-    color: 'white',
+    marginLeft: 10,
   },
 });
