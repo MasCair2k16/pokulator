@@ -52,6 +52,7 @@ const ModalLayout = (Hand, updateHand) => {
             {suites.map(card => {
               return (
                 <Pressable
+                  disabled={selectedCard[1]}
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, card.abv])
                   }
