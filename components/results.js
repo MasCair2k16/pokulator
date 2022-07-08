@@ -1,148 +1,56 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { TexasHoldem } from '../node_modules/poker-odds-calc/dist/index.js';
 const winPercentage = 64;
 
 const Results = ({ userHand, dealerHand }) => {
-  // const Table = new TexasHoldem();
-  // // try {
-  //   Table.addPlayer(['5h', '5d']);
-  //   Table.addPlayer(['9h', '3h']);
-  //   Table.setBoard(dealerHand);
-  // // } catch (error) {
-  // //   console.log(error)
-  // // }
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
-  // let results = Table.calculate();
-  // results.getPlayers().forEach(player => {
-  //   console.log(`${player.getName()} - ${player.getHand()} - Wins: ${player.getWinsPercentageString()} - Ties: ${player.getTiesPercentageString()}`);
-  // });
-  // console.log(results);
-  let results = null;
-  const parseresults = () => {
-    if (results === null) {
-      ('results');
-    }
-  };
+  const Table = new TexasHoldem();
+  Table.limit(100);
+  try {
+    Table.addPlayer(['2d', '3d']); // make userHand
+    Table.addPlayer(['Ad', 'Ah']); // Change so cards aren't replicated
+    Table.setBoard(dealerHand);
+  } catch (error) {
+    console.log(error);
+  }
 
-  // useEffect(() => {}, [results]);
+  let results = Table.calculate();
+  let ranks = results.getPlayers()[0].getRanks();
+  let object = Object.entries(ranks.FLUSH.player.data.ranks);
+  console.log(object);
+
   return (
     <>
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text
-            style={
-              winPercentage > 60 ? styles.winPercentage : styles.winPercentage
-            }
-          >
-            {winPercentage}%
-          </Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Two Pair</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>High Card</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Three of a kind</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Straight</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Flush</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Full House</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Royal Flush</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Four of a Kind</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Straight Flush</Text>
-        </View>
-      </View>
-
-      <View style={styles.firstRow}>
-        <View style={styles.percentage}>
-          <Text style={styles.winString}>Win Percentage</Text>
-          <Text style={styles.winPercentage}>{winPercentage}%</Text>
-        </View>
-        <View>
-          <Text style={styles.winHandString}>Hand</Text>
-          <Text style={styles.winHand}>Royal Flush</Text>
-        </View>
-      </View>
+      {object.map((hand, i) => {
+        return (
+          <View style={styles.firstRow}>
+            <View style={styles.percentage}>
+              <Text style={styles.winString}>Win Percentage</Text>
+              <Text
+                style={
+                  winPercentage > 60
+                    ? styles.winPercentage
+                    : styles.winPercentage
+                }
+              >
+                {hand[1] / 100}%
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.winHandString}>Hand</Text>
+              <Text style={styles.winHand}>
+                {capitalizeFirstLetter(
+                  hand[0].replaceAll('_', ' ').toLowerCase(),
+                )}
+              </Text>
+            </View>
+          </View>
+        );
+      })}
     </>
   );
 };
