@@ -23,12 +23,18 @@ const UniqueCard = ({ title, onlyNumbers = false }) => {
       {/* Prints cardCovers */}
       {title !== '+' && !onlyNumbers && (
         <View style={styles.cardContainer}>
-          <Image style={styles.cardFace} source={image.src} />
+          <Image key={title} style={styles.cardFace} source={image.src} />
         </View>
       )}
       {/* Prints only numbers */}
       {onlyNumbers && (
         <View style={styles.emptyCard}>
+          <Text>{title}</Text>
+        </View>
+      )}
+      {/* Hide cards with no title */}
+      {title === '' && (
+        <View style={styles.DontShowCard}>
           <Text>{title}</Text>
         </View>
       )}
@@ -74,5 +80,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 87,
     borderRadius: 1,
+  },
+  DontShowCard: {
+    backgroundColor: 'transparent',
   },
 });

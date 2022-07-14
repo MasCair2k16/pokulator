@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -20,7 +20,9 @@ const ModalLayout = (Hand, updateHand) => {
     { suite: 'hearts', abv: 'h' },
   ];
   // eslint-disable-next-line prettier/prettier
-  const numbers = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+  const numbers26 = ['2', '3', '4', '5', '6'];
+  const numbers7J = ['7', '8', '9', 'T', 'J'];
+  const numbersQA = ['Q', '', 'K', '', 'A'];
 
   //EX: cardPicked, suite, number
   const [selectedCard, setSelectedCard] = useState([]);
@@ -45,10 +47,10 @@ const ModalLayout = (Hand, updateHand) => {
           );
         })}
       </DealerBoard>
-      {selectedCard[0] && (
+      {selectedCard[0] && !selectedCard[1] && (
         <>
           <Text>Choose a Suit</Text>
-          <DealerBoard modal={true}>
+          <DealerBoard modal={true} isWrap={false}>
             {suites.map(card => {
               return (
                 <Pressable
@@ -67,8 +69,8 @@ const ModalLayout = (Hand, updateHand) => {
       {selectedCard[1] && (
         <>
           <Text>Pick a Number</Text>
-          <DealerBoard modal={true}>
-            {numbers.map((number, i) => {
+          <DealerBoard modal={true} isWrap={true}>
+            {numbers26.map((number, i) => {
               return (
                 <Pressable
                   onPress={() =>
@@ -76,6 +78,32 @@ const ModalLayout = (Hand, updateHand) => {
                   }
                 >
                   <UniqueCard title={number} key={i} onlyNumbers={true} />
+                </Pressable>
+              );
+            })}
+            {numbers7J.map((number, i) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    setSelectedCard(cardArray => [...cardArray, number])
+                  }
+                >
+                  <View style={styles.newLine}>
+                    <UniqueCard title={number} key={i} onlyNumbers={true} />
+                  </View>
+                </Pressable>
+              );
+            })}
+            {numbersQA.map((number, i) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    setSelectedCard(cardArray => [...cardArray, number])
+                  }
+                >
+                  <View style={styles.newLines}>
+                    <UniqueCard title={number} key={i} onlyNumbers={true} />
+                  </View>
                 </Pressable>
               );
             })}
@@ -115,7 +143,7 @@ const Cards = ({ userHand, dealerHand, updateHand }) => {
         }}
       >
         <SafeAreaView>
-          <View style={styles.centeredView}>
+          <View>
             <View style={styles.modalView}>
               <Text>Choose a Card</Text>
               {dealerHand && ModalLayout(dealerHand, updateHand)}
@@ -187,8 +215,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     height: '100%',
-    padding: 35,
+    padding: 15,
     alignItems: 'center',
     elevation: 5,
   },
+  newLine: {
+    top: 5,
+  },
+  newLines: {
+    top: 10,
+  },
+  centeredView: {
+    padding: 0,
+  }
 });

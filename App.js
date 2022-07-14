@@ -19,6 +19,13 @@ import {
   Pressable,
 } from 'react-native';
 
+/**
+ * TODO: make card numbers look good
+ * TODO: percentage numbers are right
+ * TODO: Make button on Modal
+ * TODO: Show no percentage when no cards are selected
+ */
+
 import AppBar from './components/appbar';
 import Results from './components/results';
 import Cards from './components/cards';
