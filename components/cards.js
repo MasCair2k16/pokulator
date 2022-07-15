@@ -38,6 +38,7 @@ const ModalLayout = (Hand, updateHand) => {
   };
   return (
     <>
+      <Text>Choose a Card</Text>
       <DealerBoard modal={true}>
         {Hand.map((type, i) => {
           return (
@@ -51,9 +52,10 @@ const ModalLayout = (Hand, updateHand) => {
         <>
           <Text>Choose a Suit</Text>
           <DealerBoard modal={true} isWrap={false}>
-            {suites.map(card => {
+            {suites.map((card,i) => {
               return (
                 <Pressable
+                  key={i}
                   disabled={selectedCard[1]}
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, card.abv])
@@ -73,6 +75,7 @@ const ModalLayout = (Hand, updateHand) => {
             {numbers26.map((number, i) => {
               return (
                 <Pressable
+                  key={i}
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
@@ -84,6 +87,7 @@ const ModalLayout = (Hand, updateHand) => {
             {numbers7J.map((number, i) => {
               return (
                 <Pressable
+                  key={i}
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
@@ -97,6 +101,7 @@ const ModalLayout = (Hand, updateHand) => {
             {numbersQA.map((number, i) => {
               return (
                 <Pressable
+                  disabled={number === ''}
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
@@ -111,12 +116,9 @@ const ModalLayout = (Hand, updateHand) => {
         </>
       )}
       {selectedCard[2] && (
-        <Button
-          onPress={handleChangeCard}
-          title="Add Card"
-          color="#841584"
-          accessibilityLabel="Add Card"
-        />
+        <Pressable style={styles.addCard} onPress={handleChangeCard}>
+          <Text style={styles.addCardButtonText}>Add Card</Text>
+        </Pressable>
       )}
     </>
   );
@@ -134,6 +136,7 @@ const Cards = ({ userHand, dealerHand, updateHand }) => {
 
   return (
     <View style={styles.centeredView}>
+      {/* Modal screen */}
       <Modal
         animationType="slide"
         transparent={false}
@@ -145,19 +148,20 @@ const Cards = ({ userHand, dealerHand, updateHand }) => {
         <SafeAreaView>
           <View>
             <View style={styles.modalView}>
-              <Text>Choose a Card</Text>
+              {/* Modal layout for hands */}
               {dealerHand && ModalLayout(dealerHand, updateHand)}
               {userHand && ModalLayout(userHand, updateHand)}
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>Hide</Text>
               </Pressable>
             </View>
           </View>
         </SafeAreaView>
       </Modal>
+      {/* Show Dealer Hand in Modal Header */}
       {dealerHand && (
         <DealerBoard dealer={true}>
           <Pressable onPress={() => setModalVisible(true)}>
@@ -177,6 +181,7 @@ const Cards = ({ userHand, dealerHand, updateHand }) => {
           </Pressable>
         </DealerBoard>
       )}
+      {/* Show User Hand in Modal Header */}
       {userHand && (
         <DealerBoard>
           <Pressable onPress={() => setModalVisible(true)}>
@@ -218,6 +223,28 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: 'center',
     elevation: 5,
+  },
+  addCard: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'black',
+  },
+  textStyle: {
+    fontSize: 18,
+    lineHeight: 50,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+  },
+  addCardButtonText: {
+    fontSize: 18,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
   },
   newLine: {
     top: 5,
