@@ -20,10 +20,12 @@ import {
 } from 'react-native';
 
 /**
- * TODO: make card numbers look good
- * TODO: percentage numbers are right
+ * TODO: make card numbers look good - DONE
+ * TODO: percentage numbers are right - DONE
  * TODO: Make button on Modal
- * TODO: Show no percentage when no cards are selected
+ * TODO: Show no percentage when no cards are selected - DONE
+ * TODO: remove cards already used.
+ * TODO: make HIDE Modal look better
  */
 
 import AppBar from './components/appbar';
