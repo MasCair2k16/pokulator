@@ -11,8 +11,10 @@ const Results = ({ userHand, dealerHand }) => {
   const Table = new TexasHoldem();
   Table.limit(100);
   try {
-    Table.addPlayer(['2d', '3d']); // make userHand
-    Table.addPlayer(['Ad', 'Ah']); // Change so cards aren't replicated
+    userHand.includes('+')
+      ? Table.addPlayer(['2d', '9d'])
+      : Table.addPlayer(userHand); // make userHand
+    Table.addPlayer(['Ad', '6h']); // Change so cards aren't replicated
     Table.setBoard(dealerHand);
   } catch (error) {
     console.log(error);
@@ -21,36 +23,47 @@ const Results = ({ userHand, dealerHand }) => {
   let results = Table.calculate();
   let ranks = results.getPlayers()[0].getRanks();
   let object = Object.entries(ranks.FLUSH.player.data.ranks);
-  console.log(object);
+  console.log('Hello', userHand);
+  // console.log(object);
 
   return (
     <>
-      {object.map((hand, i) => {
-        return (
-          <View style={styles.firstRow}>
-            <View style={styles.percentage}>
-              <Text style={styles.winString}>Win Percentage</Text>
-              <Text
-                style={
-                  winPercentage > 60
-                    ? styles.winPercentage
-                    : styles.winPercentage
-                }
-              >
-                {hand[1] / 100}%
-              </Text>
+      {userHand.includes('+') ? (
+        <View style={styles.noCardsScreen}>
+          <Text style={styles.noCardsText}>
+            Uh oh, {'\n'}try filling your cards first{'\n'}to see your
+            chances...
+          </Text>
+        </View>
+      ) : (
+        !userHand.includes('+') &&
+        object.map((hand, i) => {
+          return (
+            <View style={styles.firstRow}>
+              <View style={styles.percentage}>
+                <Text style={styles.winString}>Win Percentage</Text>
+                <Text
+                  style={
+                    winPercentage > 60
+                      ? styles.winPercentage
+                      : styles.winPercentage
+                  }
+                >
+                  {hand[1] / 100}%
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.winHandString}>Hand</Text>
+                <Text style={styles.winHand}>
+                  {capitalizeFirstLetter(
+                    hand[0].replaceAll('_', ' ').toLowerCase(),
+                  )}
+                </Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.winHandString}>Hand</Text>
-              <Text style={styles.winHand}>
-                {capitalizeFirstLetter(
-                  hand[0].replaceAll('_', ' ').toLowerCase(),
-                )}
-              </Text>
-            </View>
-          </View>
-        );
-      })}
+          );
+        })
+      )}
     </>
   );
 };
@@ -94,6 +107,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 18,
   },
+  noCardsText: {
+    color: 'white',
+    FontWeight: 'bold',
+    // fontWeight: '500',
+    fontSize: 22,
+  },
   winPercentage: {
     fontSize: 22,
     fontWeight: '300',
@@ -112,5 +131,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 10,
+  },
+  noCardsScreen: {
+    marginTop: 70,
+    marginLeft: 50,
+    marginRight: 50,
+    height: 240,
   },
 });
