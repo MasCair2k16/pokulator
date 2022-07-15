@@ -8,12 +8,9 @@ const DealerBoard = ({ children, dealer, modal, isWrap }) => {
     );
   }
 
-  return (
-    <View style={styles.modal || isWrap && styles.wrap && styles.modal}>
-      {children}
-    </View>
-  );
+  return <View style={[styles.modal, isWrap && styles.wrap]}>{children}</View>;
 };
+
 export default DealerBoard;
 
 const styles = StyleSheet.create({
@@ -49,7 +46,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'space-evenly',
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
   },
   wrap: {
     flexWrap: 'wrap',
