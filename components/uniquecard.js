@@ -9,9 +9,9 @@ import CardCovers from '../assests/cardList/cardList';
  * @param {array} dealerHand Dealer hand of the game
  * @returns
  */
-const UniqueCard = ({ title, onlyNumbers = false }) => {
+const UniqueCard = ({ title, onlyNumbers = false, isUsed = false }) => {
   const image = CardCovers.find(obj => obj.name === title);
-
+  console.log(title, isUsed);
   return (
     <>
       {/* Prints Plus sign */}
@@ -27,8 +27,14 @@ const UniqueCard = ({ title, onlyNumbers = false }) => {
         </View>
       )}
       {/* Prints only numbers */}
-      {title !== '' && onlyNumbers && (
+      {title !== '' && onlyNumbers && !isUsed && (
         <View style={styles.emptyCard}>
+          <Text style={styles.cardFont}>{title === 'T' ? 10 : title}</Text>
+        </View>
+      )}
+      {/* Prints usedCards */}
+      {title !== '' && onlyNumbers && isUsed && (
+        <View style={styles.usedCard}>
           <Text style={styles.cardFont}>{title === 'T' ? 10 : title}</Text>
         </View>
       )}
@@ -43,6 +49,22 @@ export default UniqueCard;
 const styles = StyleSheet.create({
   emptyCard: {
     backgroundColor: 'white',
+    width: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // padding: 15,
+    marginLeft: 5,
+    marginRight: 5,
+    paddingTop: 35,
+    paddingBottom: 35,
+    borderRadius: 2,
+    shadowColor: '#171717',
+    shadowOffset: { height: 7 },
+    shadowOpacity: 0.6,
+    shadowRadius: 6,
+  },
+  usedCard: {
+    backgroundColor: '#bababa',
     width: 55,
     justifyContent: 'center',
     alignItems: 'center',

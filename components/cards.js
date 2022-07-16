@@ -12,7 +12,7 @@ import {
 import DealerBoard from '../components/dealerBoard';
 import UniqueCard from '../components/uniquecard';
 
-const ModalLayout = (Hand, updateHand) => {
+const ModalLayout = (Hand, updateHand, usedCards) => {
   const suites = [
     { suite: 'spades', abv: 's' },
     { suite: 'diamonds', abv: 'd' },
@@ -36,6 +36,15 @@ const ModalLayout = (Hand, updateHand) => {
     updateHand(userCards);
     setSelectedCard([]);
   };
+
+  /**
+   * HandleUsedCard checks if a card has been used already
+   */
+  const handleUsedCard = (number, suite) => {
+    let isUsed = usedCards.includes(`${number}${suite}`);
+    return isUsed;
+  };
+
   return (
     <>
       <Text>Choose a Card</Text>
@@ -52,7 +61,7 @@ const ModalLayout = (Hand, updateHand) => {
         <>
           <Text>Choose a Suit</Text>
           <DealerBoard modal={true} isWrap={false}>
-            {suites.map((card,i) => {
+            {suites.map((card, i) => {
               return (
                 <Pressable
                   key={i}
@@ -76,11 +85,12 @@ const ModalLayout = (Hand, updateHand) => {
               return (
                 <Pressable
                   key={i}
+                  disabled={handleUsedCard(number, selectedCard[1])}
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
                 >
-                  <UniqueCard title={number} key={i} onlyNumbers={true} />
+                  <UniqueCard title={number} key={i} onlyNumbers={true} isUsed={handleUsedCard(number, selectedCard[1])}/>
                 </Pressable>
               );
             })}
@@ -88,12 +98,13 @@ const ModalLayout = (Hand, updateHand) => {
               return (
                 <Pressable
                   key={i}
+                  disabled={handleUsedCard(number, selectedCard[1])}
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
                 >
                   <View style={styles.newLine}>
-                    <UniqueCard title={number} key={i} onlyNumbers={true} />
+                    <UniqueCard title={number} key={i} onlyNumbers={true} isUsed={handleUsedCard(number, selectedCard[1])} />
                   </View>
                 </Pressable>
               );
@@ -101,13 +112,15 @@ const ModalLayout = (Hand, updateHand) => {
             {numbersQA.map((number, i) => {
               return (
                 <Pressable
-                  disabled={number === ''}
+                  disabled={
+                    number === '' || handleUsedCard(number, selectedCard[1])
+                  }
                   onPress={() =>
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
                 >
                   <View style={styles.newLines}>
-                    <UniqueCard title={number} key={i} onlyNumbers={true} />
+                    <UniqueCard title={number} key={i} onlyNumbers={true} isUsed={handleUsedCard(number, selectedCard[1])} />
                   </View>
                 </Pressable>
               );
@@ -131,9 +144,8 @@ const ModalLayout = (Hand, updateHand) => {
  * @param {array} dealerHand Dealer hand of the game
  * @returns
  */
-const Cards = ({ userHand, dealerHand, updateHand }) => {
+const Cards = ({ userHand, dealerHand, updateHand, usedCards }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
   return (
     <View style={styles.centeredView}>
       {/* Modal screen */}
@@ -149,8 +161,8 @@ const Cards = ({ userHand, dealerHand, updateHand }) => {
           <View>
             <View style={styles.modalView}>
               {/* Modal layout for hands */}
-              {dealerHand && ModalLayout(dealerHand, updateHand)}
-              {userHand && ModalLayout(userHand, updateHand)}
+              {dealerHand && ModalLayout(dealerHand, updateHand, usedCards)}
+              {userHand && ModalLayout(userHand, updateHand, usedCards)}
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
@@ -254,5 +266,5 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     padding: 0,
-  }
+  },
 });

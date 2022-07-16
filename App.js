@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Node } from 'react';
 
 import {
@@ -21,11 +21,12 @@ import {
 
 /**
  * TODO: make card numbers look good - DONE
- * TODO: percentage numbers are right - DONE
+ * TODO: percentage numbers are right
  * TODO: Make button on Modal
  * TODO: Show no percentage when no cards are selected - DONE
- * TODO: remove cards already used.
+ * TODO: remove cards already used. - DONE
  * TODO: make HIDE Modal look better
+ * TODO: make best chance at top
  */
 
 import AppBar from './components/appbar';
@@ -44,7 +45,16 @@ const Section = ({ children, title }): Node => {
 const App: () => Node = () => {
   const [dealerHand, setDealerHand] = useState(['+', '+', '+', '+', '+']);
   const [userHand, setUserHand] = useState(['+', '+']);
+  const [usedCards, setUsedCards] = useState([]);
 
+  // Every Time user changes card, we update usedCards to limit cards being touched
+  useEffect(() => {
+    let usedCardsList = userHand.concat(dealerHand);
+    return setUsedCards(usedCardsList);
+  }, [userHand, dealerHand]);
+
+
+  console.log(usedCards);
   return (
     <SafeAreaView style={styles.backgroundColor}>
       <StatusBar barStyle={'dark-content'} />
@@ -56,7 +66,11 @@ const App: () => Node = () => {
         <View style={[styles.backgroundColor]}>
           <View>
             <Section title="Dealer hand">
-              <Cards dealerHand={dealerHand} updateHand={setDealerHand} />
+              <Cards
+                dealerHand={dealerHand}
+                updateHand={setDealerHand}
+                usedCards={usedCards}
+              />
               <Pressable
                 onPress={() => setDealerHand(['+', '+', '+', '+', '+'])}
               >
@@ -66,7 +80,11 @@ const App: () => Node = () => {
           </View>
           <View>
             <Section title="Your cards">
-              <Cards userHand={userHand} updateHand={setUserHand} />
+              <Cards
+                userHand={userHand}
+                updateHand={setUserHand}
+                usedCards={usedCards}
+              />
               <Pressable
                 onPress={() => {
                   return setUserHand(['+', '+']);
