@@ -20,7 +20,7 @@ const UniqueCard = ({ title, onlyNumbers = false, isUsed = false }) => {
           <Text>&#43;</Text>
         </View>
       )}
-      {/* Prints cardCovers */}
+      {/* Prints cardFaces */}
       {title !== '+' && !onlyNumbers && (
         <View style={styles.cardContainer}>
           <Image key={title} style={styles.cardFace} source={image.src} />
@@ -32,7 +32,7 @@ const UniqueCard = ({ title, onlyNumbers = false, isUsed = false }) => {
           <Text style={styles.cardFont}>{title === 'T' ? 10 : title}</Text>
         </View>
       )}
-      {/* Prints usedCards */}
+      {/* Prints usedCards - grey-out */}
       {title !== '' && onlyNumbers && isUsed && (
         <View style={styles.usedCard}>
           <Text style={styles.cardFont}>{title === 'T' ? 10 : title}</Text>

@@ -2,29 +2,48 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { TexasHoldem } from '../node_modules/poker-odds-calc/dist/index.js';
 const winPercentage = 64;
+const limit = 100;
 
+/**
+ * Print Results of users hand
+ * @param {Array<Object>} userHand
+ * @param {Array<Object>} dealerHand
+ * @returns HTML list of the hand probablities
+ */
 const Results = ({ userHand, dealerHand }) => {
+  // Capitalizes First Letter
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  function prettifyPercentage(percentage = '') {
+    if (percentage.length === 2) {
+      return percentage;
+    } else if (percentage.charAt(1) === '0') {
+      return percentage.slice(2);
+    } else {
+      return percentage.slice(2);
+    }
+  }
   const Table = new TexasHoldem();
-  Table.limit(100);
-  try {
-    userHand.includes('+')
-      ? Table.addPlayer(['2d', '9d'])
-      : Table.addPlayer(userHand); // make userHand
-    Table.addPlayer(['Ad', '6h']); // Change so cards aren't replicated
-    Table.setBoard(dealerHand);
-  } catch (error) {
-    console.log(error);
+  Table.limit(limit);
+
+  // console.log('userHand', userHand.includes('+'));
+  // if userHand is full, start adding other players
+  if (userHand) {
+    try {
+      userHand.includes('+') ? Table.addPlayer(['2d', '3d']) : Table.addPlayer(userHand);
+      Table.addPlayer(['Ad', 'Ah']); // Change so cards aren't replicated
+      Table.setBoard(dealerHand);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   let results = Table.calculate();
   let ranks = results.getPlayers()[0].getRanks();
   let object = Object.entries(ranks.FLUSH.player.data.ranks);
-  console.log('Hello', userHand);
-  // console.log(object);
+  const scoresHighToLow = object.sort((a, b) => b[1] - a[1]);
 
   return (
     <>
@@ -37,7 +56,7 @@ const Results = ({ userHand, dealerHand }) => {
         </View>
       ) : (
         !userHand.includes('+') &&
-        object.map((hand, i) => {
+        scoresHighToLow.map((hand, i) => {
           return (
             <View style={styles.firstRow}>
               <View style={styles.percentage}>
@@ -49,7 +68,7 @@ const Results = ({ userHand, dealerHand }) => {
                       : styles.winPercentage
                   }
                 >
-                  {hand[1] / 100}%
+                  {prettifyPercentage(`${hand[1] / limit}%`)}
                 </Text>
               </View>
               <View>
@@ -136,6 +155,6 @@ const styles = StyleSheet.create({
     marginTop: 70,
     marginLeft: 50,
     marginRight: 50,
-    height: 240,
+    height: 300,
   },
 });

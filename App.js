@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect } from 'react';
 import type { Node } from 'react';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 import {
   SafeAreaView,
@@ -22,11 +23,11 @@ import {
 /**
  * TODO: make card numbers look good - DONE
  * TODO: percentage numbers are right
- * TODO: Make button on Modal
+ * TODO: Make button on Modal - DONE
  * TODO: Show no percentage when no cards are selected - DONE
  * TODO: remove cards already used. - DONE
  * TODO: make HIDE Modal look better
- * TODO: make best chance at top
+ * TODO: make best chance at top - DONE
  */
 
 import AppBar from './components/appbar';
@@ -47,18 +48,42 @@ const App: () => Node = () => {
   const [userHand, setUserHand] = useState(['+', '+']);
   const [usedCards, setUsedCards] = useState([]);
 
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(2);
+  const [items, setItems] = useState([
+    { label: '2 Players', containerStyle: 'containerStyle', value: 2 },
+    { label: '3 Players', containerStyle: 'containerStyle', value: 3 },
+    { label: '4 Players', containerStyle: 'containerStyle', value: 4 },
+    { label: '5 Players', containerStyle: 'containerStyle', value: 5 },
+    { label: '6 Players', containerStyle: 'containerStyle', value: 6 },
+    { label: '7 Players', containerStyle: 'containerStyle', value: 7 },
+    ,
+  ]);
+
   // Every Time user changes card, we update usedCards to limit cards being touched
   useEffect(() => {
     let usedCardsList = userHand.concat(dealerHand);
     return setUsedCards(usedCardsList);
   }, [userHand, dealerHand]);
 
-
-  console.log(usedCards);
   return (
     <SafeAreaView style={styles.backgroundColor}>
       <StatusBar barStyle={'dark-content'} />
       <AppBar title="Your calculator" />
+      <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+          containerStyle={{
+            marginTop: 12,
+            marginBottom: 12,
+            marginHorizontal: 24,
+            width: '88%',
+          }}
+        />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollBehaviour}
