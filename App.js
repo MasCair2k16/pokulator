@@ -48,8 +48,9 @@ const App: () => Node = () => {
   const [userHand, setUserHand] = useState(['+', '+']);
   const [usedCards, setUsedCards] = useState([]);
 
+  // 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(2);
+  const [playerCount, setPlayerCount] = useState(2);
   const [items, setItems] = useState([
     { label: '2 Players', containerStyle: 'containerStyle', value: 2 },
     { label: '3 Players', containerStyle: 'containerStyle', value: 3 },
@@ -57,7 +58,6 @@ const App: () => Node = () => {
     { label: '5 Players', containerStyle: 'containerStyle', value: 5 },
     { label: '6 Players', containerStyle: 'containerStyle', value: 6 },
     { label: '7 Players', containerStyle: 'containerStyle', value: 7 },
-    ,
   ]);
 
   // Every Time user changes card, we update usedCards to limit cards being touched
@@ -71,19 +71,19 @@ const App: () => Node = () => {
       <StatusBar barStyle={'dark-content'} />
       <AppBar title="Your calculator" />
       <DropDownPicker
-          open={open}
-          value={value}
-          items={items}
-          setOpen={setOpen}
-          setValue={setValue}
-          setItems={setItems}
-          containerStyle={{
-            marginTop: 12,
-            marginBottom: 12,
-            marginHorizontal: 24,
-            width: '88%',
-          }}
-        />
+        open={open}
+        value={playerCount}
+        items={items}
+        setOpen={setOpen}
+        setValue={setPlayerCount}
+        setItems={setItems}
+        containerStyle={{
+          marginTop: 12,
+          marginBottom: 12,
+          marginHorizontal: 24,
+          width: '88%',
+        }}
+      />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollBehaviour}
@@ -120,7 +120,11 @@ const App: () => Node = () => {
             </Section>
           </View>
           <Section title="Your chances">
-            <Results dealerHand={dealerHand} userHand={userHand} />
+            <Results
+              dealerHand={dealerHand}
+              userHand={userHand}
+              playerCount={playerCount}
+            />
           </Section>
         </View>
       </ScrollView>

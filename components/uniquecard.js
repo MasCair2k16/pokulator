@@ -11,7 +11,6 @@ import CardCovers from '../assests/cardList/cardList';
  */
 const UniqueCard = ({ title, onlyNumbers = false, isUsed = false }) => {
   const image = CardCovers.find(obj => obj.name === title);
-  console.log(title, isUsed);
   return (
     <>
       {/* Prints Plus sign */}
