@@ -13,13 +13,16 @@ const limit = 100;
  */
 const Results = ({ userHand, dealerHand, playerCount }) => {
   // Keep track of players Card
-  const [PlayersCard, setPlayersCard] = useState([]);
+  let PlayersCard = [];
 
-  // useEffect(() => {
-  //   setPlayersCard([]);
-  // }, [playerCount, userHand]);
+  useEffect(() => {
+    PlayersCard = [];
+  }, [playerCount, userHand, dealerHand]);
 
   var hasNumber = /\d/;
+
+  // Track how many empty cards are in a hand
+  const amountOfEmptyCard = dealerHand.filter(x => x === '+').length;
 
   // Capitalizes First Letter
   function capitalizeFirstLetter(string) {
@@ -42,28 +45,6 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
     }
   }
 
-  const makePlayerCards = () => {
-    let newPlayer = true;
-    while (newPlayer) {
-      let firstCard = CardCovers[getRandomInt(CardCovers.length)].name;
-      let secondCard = CardCovers[getRandomInt(CardCovers.length)].name;
-      if (
-        hasNumber.test(firstCard) &&
-        hasNumber.test(secondCard) &&
-        !userHand.includes(firstCard) &&
-        !userHand.includes(secondCard)
-      ) {
-        Table.addPlayer(['4d', '5d']);
-        console.log("user hand doesn't have player cards");
-        console.log("Cards", `${firstCard}`, `${secondCard}`)
-        Table.addPlayer([`${firstCard}`, `${secondCard}`]);
-        newPlayer = false;
-      } else {
-        console.log('user hand does have a card as player');
-      }
-    }
-  };
-
   // ! NO TOUCHY
   // Create new instance of poker game
   // const Table = new TexasHoldem();
@@ -78,84 +59,83 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
    * Add cards to x players
    *  - To do this, grab random number from cardList Array
    *    - Make sure its not a suit name
-   *  - Make sure other players aren't having same cards
-   *  - Avoid greying out the cards on UI.
+   *    - Make sure other players aren't having same cards
+   *    - Avoid greying out the cards on UI.
+   *    - Avoid duplicate random Cards
    * if user doesn't pick cards yet, make a random hand too
    * Once user does pick cards, add them into hand.
    * Keep in mind ranks variable - player index 0
    */
 
-  /**
-   * Randomize cards for each player
-   * If user picks a card that a player already has, randomize another card for player
-   *
-   */
-
   // if user picks a card, that a player already has, player must change card
 
-  // try {
-  //   for (let index = 0; index < playerCount; index++) {
-  //     let newPlayer = true;
-  //     console.log("Flag 1");
-  //     while (newPlayer && index < playerCount) {
-  //       let firstCard = CardCovers[getRandomInt(CardCovers.length)].name;
-  //       let secondCard = CardCovers[getRandomInt(CardCovers.length)].name;
-  //       console.log("Flag 2");
-  //       // Check if player card isn't suit, not duplicate of user hand, and not duplicate of other players
-  //       if (
-  //         hasNumber.test(firstCard) &&
-  //         hasNumber.test(secondCard) &&
-  //         !userHand.includes(firstCard) &&
-  //         !userHand.includes(secondCard) &&
-  //         !PlayersCard.includes(firstCard) &&
-  //         !PlayersCard.includes(secondCard)
-  //       ) {
-  //         console.log("Flag 3");
-  //         console.log(`${index} Player:`, firstCard, secondCard);
-  //         console.log('userdcards', PlayersCard);
-  //         setPlayersCard(PlayersCard => [...PlayersCard, firstCard]);
-  //         setPlayersCard(PlayersCard => [...PlayersCard, secondCard]);
-  //         Table.addPlayer([firstCard, secondCard]);
-  //         newPlayer = false;
-  //       }
-  //     }
-  //   }
-  // } catch (err) {
-  //   console.log(err);
-  // }
   const Table = new TexasHoldem();
   Table.limit(limit);
 
-  for (let index = 0; index < playerCount; index++) {
-    try {
-      // grab users card
-      if (index === 0) {
-        userHand.includes('+')
-          ? Table.addPlayer(['2d', '3d'])
-          : Table.addPlayer(userHand);
-      } else {
-        // grab AI players card that are fit all conditions.
-        makePlayerCards(Table);
+  if (userHand.includes('+')) {
+    Table.addPlayer(['Qs', 'Ks']);
+    Table.addPlayer(['7d', '3s']);
+  } else {
+    Table.addPlayer(userHand);
+
+    for (let index = 1; index <= playerCount; index++) {
+      let newPlayer = true;
+      while (newPlayer) {
+        let firstCard = CardCovers[getRandomInt(CardCovers.length)].name;
+        let secondCard = CardCovers[getRandomInt(CardCovers.length)].name;
+        if (
+          hasNumber.test(firstCard) &&
+          hasNumber.test(secondCard) &&
+          userHand.indexOf(firstCard) === -1 &&
+          userHand.indexOf(secondCard) === -1 &&
+          PlayersCard.indexOf(firstCard) === -1 &&
+          PlayersCard.indexOf(secondCard) === -1 &&
+          secondCard !== firstCard
+        ) {
+          newPlayer = false;
+          PlayersCard.push(firstCard);
+          PlayersCard.push(secondCard);
+          Table.addPlayer([firstCard, secondCard]);
+        }
       }
-    } catch (error) {
-      console.log('Error:', error);
     }
   }
 
-  if (userHand) {
-    try {
-      // ! NO TOUCHY
-      // userHand.includes('+') ? Table.addPlayer(['2d', '3d']) : Table.addPlayer(userHand);
-      // Table.addPlayer(['Ad', 'Ah']); // Change so cards aren't replicated
-      // Table.setBoard(dealerHand);
-    } catch (error) {
-      // ! NO TOUCHY
-      // console.log(error);
-    }
+  // rest of players
+
+  // Table.addPlayer(['7d', '3s']);
+  // Table.addPlayer(['8d', '4s']);
+
+  if (amountOfEmptyCard === 2) {
+    console.log('Flag 1', amountOfEmptyCard);
+    Table.setBoard([
+      `${dealerHand[0]}`,
+      `${dealerHand[1]}`,
+      `${dealerHand[2]}`,
+    ]);
+  } else if (amountOfEmptyCard === 1) {
+    console.log('Flag 2', amountOfEmptyCard);
+    Table.setBoard([
+      `${dealerHand[0]}`,
+      `${dealerHand[1]}`,
+      `${dealerHand[2]}`,
+      `${dealerHand[3]}`,
+    ]);
+  } else if (amountOfEmptyCard === 0) {
+    console.log('Flag 3', amountOfEmptyCard);
+    Table.setBoard([
+      `${dealerHand[0]}`,
+      `${dealerHand[1]}`,
+      `${dealerHand[2]}`,
+      `${dealerHand[3]}`,
+      `${dealerHand[4]}`,
+    ]);
   }
 
   // Grab user data from Poker API Calculator
   let results = Table.calculate();
+  console.log('Player 0 Hand', results.getPlayers()[0].getHand());
+  console.log('Player 1 Hand', results.getPlayers()[1].getHand());
   let ranks = results.getPlayers()[0].getRanks();
   let object = Object.entries(ranks.FLUSH.player.data.ranks);
 
