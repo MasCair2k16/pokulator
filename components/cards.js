@@ -90,7 +90,12 @@ const ModalLayout = (Hand, updateHand, usedCards) => {
                     setSelectedCard(cardArray => [...cardArray, number])
                   }
                 >
-                  <UniqueCard title={number} key={i} onlyNumbers={true} isUsed={handleUsedCard(number, selectedCard[1])}/>
+                  <UniqueCard
+                    title={number}
+                    key={i}
+                    onlyNumbers={true}
+                    isUsed={handleUsedCard(number, selectedCard[1])}
+                  />
                 </Pressable>
               );
             })}
@@ -104,7 +109,12 @@ const ModalLayout = (Hand, updateHand, usedCards) => {
                   }
                 >
                   <View style={styles.newLine}>
-                    <UniqueCard title={number} key={i} onlyNumbers={true} isUsed={handleUsedCard(number, selectedCard[1])} />
+                    <UniqueCard
+                      title={number}
+                      key={i}
+                      onlyNumbers={true}
+                      isUsed={handleUsedCard(number, selectedCard[1])}
+                    />
                   </View>
                 </Pressable>
               );
@@ -120,7 +130,12 @@ const ModalLayout = (Hand, updateHand, usedCards) => {
                   }
                 >
                   <View style={styles.newLines}>
-                    <UniqueCard title={number} key={i} onlyNumbers={true} isUsed={handleUsedCard(number, selectedCard[1])} />
+                    <UniqueCard
+                      title={number}
+                      key={i}
+                      onlyNumbers={true}
+                      isUsed={handleUsedCard(number, selectedCard[1])}
+                    />
                   </View>
                 </Pressable>
               );
@@ -185,12 +200,16 @@ const Cards = ({ userHand, dealerHand, updateHand, usedCards }) => {
           <Pressable onPress={() => setModalVisible(true)}>
             <UniqueCard title={dealerHand[2]} dealerHand={dealerHand} />
           </Pressable>
-          <Pressable onPress={() => setModalVisible(true)}>
-            <UniqueCard title={dealerHand[3]} dealerHand={dealerHand} />
-          </Pressable>
-          <Pressable onPress={() => setModalVisible(true)}>
-            <UniqueCard title={dealerHand[4]} dealerHand={dealerHand} />
-          </Pressable>
+          {dealerHand.filter(x => x === '+').length < 3 && (
+            <Pressable onPress={() => setModalVisible(true)}>
+              <UniqueCard title={dealerHand[3]} dealerHand={dealerHand} />
+            </Pressable>
+          )}
+          {dealerHand.filter(x => x === '+').length < 2 && (
+            <Pressable onPress={() => setModalVisible(true)}>
+              <UniqueCard title={dealerHand[4]} dealerHand={dealerHand} />
+            </Pressable>
+          )}
         </DealerBoard>
       )}
       {/* Show User Hand in Modal Header */}
