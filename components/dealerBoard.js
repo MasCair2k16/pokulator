@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-const DealerBoard = ({ children, dealer, modal }) => {
+const DealerBoard = ({ children, dealer, modal, isWrap }) => {
   if (modal === undefined) {
     return (
       <View style={dealer ? styles.border : styles.noBorder}>{children}</View>
     );
   }
 
-  return <View style={styles.modal}>{children}</View>;
+  return <View style={[styles.modal, isWrap && styles.wrap]}>{children}</View>;
 };
+
 export default DealerBoard;
 
 const styles = StyleSheet.create({
@@ -45,5 +46,9 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'space-evenly',
     flexDirection: 'row',
+    // flexWrap: 'wrap',
+  },
+  wrap: {
+    flexWrap: 'wrap',
   },
 });
