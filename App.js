@@ -66,6 +66,11 @@ const App: () => Node = () => {
     return setUsedCards(usedCardsList);
   }, [userHand, dealerHand]);
 
+  useEffect(() => {
+    setDealerHand(['+', '+', '+', '+', '+']);
+    setUserHand(['+', '+']);
+  }, [playerCount]);
+
   return (
     <SafeAreaView style={styles.backgroundColor}>
       <StatusBar barStyle={'dark-content'} />
