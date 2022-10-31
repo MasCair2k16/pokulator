@@ -16,6 +16,7 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
   let PlayersCard = [];
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     PlayersCard = [];
   }, [playerCount, userHand, dealerHand]);
 
@@ -45,14 +46,6 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
     }
   }
 
-  // ! NO TOUCHY
-  // Create new instance of poker game
-  // const Table = new TexasHoldem();
-  // Table.limit(limit);
-
-  // console.log('userHand', userHand.includes('+'));
-  // if userHand is full, start adding other players
-
   // Add cards to players
 
   /**
@@ -77,8 +70,7 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
     Table.addPlayer(['7d', '3s']);
   } else {
     Table.addPlayer(userHand);
-
-    for (let index = 1; index <= playerCount; index++) {
+    for (let index = 1; index < playerCount; index++) {
       let newPlayer = true;
       while (newPlayer) {
         let firstCard = CardCovers[getRandomInt(CardCovers.length)].name;
@@ -92,6 +84,7 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
           PlayersCard.indexOf(secondCard) === -1 &&
           secondCard !== firstCard
         ) {
+          console.log(`Player ${index} - ${firstCard} ${secondCard}`);
           newPlayer = false;
           PlayersCard.push(firstCard);
           PlayersCard.push(secondCard);
@@ -134,8 +127,6 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
 
   // Grab user data from Poker API Calculator
   let results = Table.calculate();
-  console.log('Player 0 Hand', results.getPlayers()[0].getHand());
-  console.log('Player 1 Hand', results.getPlayers()[1].getHand());
   let ranks = results.getPlayers()[0].getRanks();
   let object = Object.entries(ranks.FLUSH.player.data.ranks);
 

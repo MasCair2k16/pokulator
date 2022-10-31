@@ -21,13 +21,12 @@ import {
 } from 'react-native';
 
 /**
- * TODO: make card numbers look good - DONE
- * TODO: percentage numbers are right
- * TODO: Make button on Modal - DONE
- * TODO: Show no percentage when no cards are selected - DONE
- * TODO: remove cards already used. - DONE
- * TODO: make HIDE Modal look better
- * TODO: make best chance at top - DONE
+ * TODO: Display percentages in right order - medium
+ * TODO: get appicon - easy
+ * TODO: App crashes unexpectedly when clickin on a cards - medium
+ * TODO: Modify dealer cards in modal - easy
+ * TODO: Fix the key in lists - easy
+ * TODO: add spacing beneath the "Pick a numher" - easy
  */
 
 import AppBar from './components/appbar';
@@ -47,8 +46,7 @@ const App: () => Node = () => {
   const [dealerHand, setDealerHand] = useState(['+', '+', '+', '+', '+']);
   const [userHand, setUserHand] = useState(['+', '+']);
   const [usedCards, setUsedCards] = useState([]);
-
-  // 
+  
   const [open, setOpen] = useState(false);
   const [playerCount, setPlayerCount] = useState(2);
   const [items, setItems] = useState([
@@ -104,7 +102,7 @@ const App: () => Node = () => {
               <Pressable
                 onPress={() => setDealerHand(['+', '+', '+', '+', '+'])}
               >
-                <Text style={styles.clearBoard}>Clear Board</Text>
+                <Text style={styles.clearBoard}>Clear Dealer</Text>
               </Pressable>
             </Section>
           </View>
@@ -120,11 +118,15 @@ const App: () => Node = () => {
                   return setUserHand(['+', '+']);
                 }}
               >
-                <Text style={styles.clearBoard}>Clear Board</Text>
+                <Text style={styles.clearBoard}>Clear Hand</Text>
               </Pressable>
             </Section>
           </View>
-          <Section title="Your chances">
+          <Section
+            title={`Your chances vs \t\t\t  ${playerCount - 1} ${
+              playerCount - 1 > 1 ? 'players' : 'player'
+            }`}
+          >
             <Results
               dealerHand={dealerHand}
               userHand={userHand}
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     top: 5,
+    marginBottom: 5,
   },
   sectionTitle: {
     fontSize: 24,
