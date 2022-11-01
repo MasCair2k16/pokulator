@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { TexasHoldem } from '../node_modules/poker-odds-calc/dist/index.js';
 import CardCovers from '../assests/cardList/cardList';
@@ -147,7 +147,7 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
         !userHand.includes('+') &&
         scoresHighToLow.map((hand, i) => {
           return (
-            <View style={styles.firstRow}>
+            <View style={styles.firstRow} key={i}>
               <View style={styles.percentage}>
                 <Text style={styles.winString}>Win Percentage</Text>
                 <Text
@@ -235,7 +235,6 @@ const styles = StyleSheet.create({
   winHandString: {
     marginTop: 0,
     color: 'black',
-    marginLeft: 0,
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 10,

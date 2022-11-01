@@ -6,7 +6,6 @@ import {
   Pressable,
   Modal,
   SafeAreaView,
-  Button,
 } from 'react-native';
 
 import DealerBoard from '../components/dealerBoard';
@@ -19,7 +18,6 @@ const ModalLayout = (Hand, updateHand, usedCards) => {
     { suite: 'clubs', abv: 'c' },
     { suite: 'hearts', abv: 'h' },
   ];
-  // eslint-disable-next-line prettier/prettier
   const numbers26 = ['2', '3', '4', '5', '6'];
   const numbers7J = ['7', '8', '9', 'T', 'J'];
   const numbersQA = ['Q', '', 'K', '', 'A'];
@@ -122,6 +120,7 @@ const ModalLayout = (Hand, updateHand, usedCards) => {
             {numbersQA.map((number, i) => {
               return (
                 <Pressable
+                  key={i}
                   disabled={
                     number === '' || handleUsedCard(number, selectedCard[1])
                   }
@@ -200,11 +199,13 @@ const Cards = ({ userHand, dealerHand, updateHand, usedCards }) => {
           <Pressable onPress={() => setModalVisible(true)}>
             <UniqueCard title={dealerHand[2]} dealerHand={dealerHand} />
           </Pressable>
+          {/* show this card if are 2 empty cards left*/}
           {dealerHand.filter(x => x === '+').length < 3 && (
             <Pressable onPress={() => setModalVisible(true)}>
               <UniqueCard title={dealerHand[3]} dealerHand={dealerHand} />
             </Pressable>
           )}
+          {/* show this card if are 1 empty cards left*/}
           {dealerHand.filter(x => x === '+').length < 2 && (
             <Pressable onPress={() => setModalVisible(true)}>
               <UniqueCard title={dealerHand[4]} dealerHand={dealerHand} />

@@ -26,14 +26,14 @@ import {
  * TODO: App crashes unexpectedly when clickin on a cards - medium
  * TODO: Modify dealer cards in modal - easy
  * TODO: Fix the key in lists - easy
- * TODO: add spacing beneath the "Pick a numher" - easy
+ * TODO: add spacing beneath the "Pick a numher" - easy - DONE
  */
 
 import AppBar from './components/appbar';
 import Results from './components/results';
 import Cards from './components/cards';
 
-const Section = ({ children, title }): Node => {
+const Section = ({ children, title }) => {
   return (
     <View style={styles.sectionContainer}>
       <Text style={styles.sectionTitle}>{title}</Text>
@@ -42,11 +42,11 @@ const Section = ({ children, title }): Node => {
   );
 };
 
-const App: () => Node = () => {
+const App = () => {
   const [dealerHand, setDealerHand] = useState(['+', '+', '+', '+', '+']);
   const [userHand, setUserHand] = useState(['+', '+']);
   const [usedCards, setUsedCards] = useState([]);
-  
+
   const [open, setOpen] = useState(false);
   const [playerCount, setPlayerCount] = useState(2);
   const [items, setItems] = useState([
@@ -80,6 +80,7 @@ const App: () => Node = () => {
         setOpen={setOpen}
         setValue={setPlayerCount}
         setItems={setItems}
+        // eslint-disable-next-line react-native/no-inline-styles
         containerStyle={{
           marginTop: 12,
           marginBottom: 12,
@@ -123,8 +124,10 @@ const App: () => Node = () => {
             </Section>
           </View>
           <Section
-            title={`Your chances vs \t\t\t  ${playerCount - 1} ${
-              playerCount - 1 > 1 ? 'players' : 'player'
+            title={`Your chances vs \t\t\t  ${
+              playerCount - 1 > 1
+                ? `${playerCount - 1} players`
+                : `\t${playerCount - 1} player`
             }`}
           >
             <Results

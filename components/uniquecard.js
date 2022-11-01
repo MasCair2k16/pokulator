@@ -34,7 +34,7 @@ const UniqueCard = ({ title, onlyNumbers = false, isUsed = false }) => {
       {/* Prints usedCards - grey-out */}
       {title !== '' && onlyNumbers && isUsed && (
         <View style={styles.usedCard}>
-          <Text style={styles.cardFont}>{title === 'T' ? 10 : title}</Text>
+          <Text style={styles.cardFontUsed}>{title === 'T' ? 10 : title}</Text>
         </View>
       )}
       {/* Hide cards with no title or number */}
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
   },
   usedCard: {
-    backgroundColor: '#bababa',
+    backgroundColor: 'black',
     width: 55,
     justifyContent: 'center',
     alignItems: 'center',
@@ -102,5 +102,10 @@ const styles = StyleSheet.create({
   cardFont: {
     fontSize: 17,
     fontWeight: '500',
+  },
+  cardFontUsed: {
+    fontSize: 17,
+    fontWeight: '500',
+    color: 'white',
   },
 });
