@@ -47,16 +47,43 @@ const ModalLayout = (Hand, updateHand, usedCards) => {
     <>
       <Text>Choose a Card</Text>
       <DealerBoard modal={true}>
-        {Hand.map((type, i) => {
-          return (
-            <Pressable onPress={() => setSelectedCard(`${i}`)}>
-              <UniqueCard title={Hand[i]} key={type} />
+        {/* User Hand */}
+        {Hand.length <= 2 &&
+          Hand.map((type, i) => {
+            return (
+              <Pressable key={i} onPress={() => setSelectedCard(`${i}`)}>
+                <UniqueCard title={Hand[i]} key={i} />
+              </Pressable>
+            );
+          })}
+        {/* Dealer hand */}
+        {Hand.length >= 3 && (
+          <>
+            <Pressable onPress={() => setSelectedCard(`${0}`)}>
+              <UniqueCard title={Hand[0]} />
             </Pressable>
-          );
-        })}
+            <Pressable onPress={() => setSelectedCard(`${1}`)}>
+              <UniqueCard title={Hand[1]} />
+            </Pressable>
+            <Pressable onPress={() => setSelectedCard(`${2}`)}>
+              <UniqueCard title={Hand[2]} />
+            </Pressable>
+            {Hand.filter(x => x === '+').length < 3 && (
+              <Pressable onPress={() => setSelectedCard(`${3}`)}>
+                <UniqueCard title={Hand[3]} />
+              </Pressable>
+            )}
+            {Hand.filter(x => x === '+').length < 2 && (
+              <Pressable onPress={() => setSelectedCard(`${4}`)}>
+                <UniqueCard title={Hand[4]} />
+              </Pressable>
+            )}
+          </>
+        )}
       </DealerBoard>
       {selectedCard[0] && !selectedCard[1] && (
         <>
+          {/* Suit Selection */}
           <Text>Choose a Suit</Text>
           <DealerBoard modal={true} isWrap={false}>
             {suites.map((card, i) => {
@@ -77,6 +104,7 @@ const ModalLayout = (Hand, updateHand, usedCards) => {
       )}
       {selectedCard[1] && (
         <>
+          {/* Number Selection */}
           <Text>Pick a Number</Text>
           <DealerBoard modal={true} isWrap={true}>
             {numbers26.map((number, i) => {

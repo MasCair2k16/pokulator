@@ -4,6 +4,7 @@ import { TexasHoldem } from '../node_modules/poker-odds-calc/dist/index.js';
 import CardCovers from '../assests/cardList/cardList';
 const winPercentage = 64;
 const limit = 100;
+let PlayersCard = [];
 
 /**
  * Print Results of users hand
@@ -13,12 +14,13 @@ const limit = 100;
  */
 const Results = ({ userHand, dealerHand, playerCount }) => {
   // Keep track of players Card
-  let PlayersCard = [];
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    PlayersCard = [];
-  }, [playerCount, userHand, dealerHand]);
+  // useEffect(() => {
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   PlayersCard = [];
+  // }, [playerCount, userHand, dealerHand, PlayersCard]);
+
+  useEffect(() => {}, []);
 
   var hasNumber = /\d/;
 
@@ -84,30 +86,31 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
           PlayersCard.indexOf(secondCard) === -1 &&
           secondCard !== firstCard
         ) {
+          // Look up how to do this code the second time it renders.
+          console.log("hello");
+          console.log('user Hand', userHand);
           console.log(`Player ${index} - ${firstCard} ${secondCard}`);
-          newPlayer = false;
+          console.log('Players Card', PlayersCard);
           PlayersCard.push(firstCard);
           PlayersCard.push(secondCard);
-          Table.addPlayer([firstCard, secondCard]);
+          try {
+            Table.addPlayer([firstCard, secondCard]);
+          } catch (error) {
+            console.log('error: ', error);
+          }
+          newPlayer = false;
         }
       }
     }
   }
 
-  // rest of players
-
-  // Table.addPlayer(['7d', '3s']);
-  // Table.addPlayer(['8d', '4s']);
-
   if (amountOfEmptyCard === 2) {
-    console.log('Flag 1', amountOfEmptyCard);
     Table.setBoard([
       `${dealerHand[0]}`,
       `${dealerHand[1]}`,
       `${dealerHand[2]}`,
     ]);
   } else if (amountOfEmptyCard === 1) {
-    console.log('Flag 2', amountOfEmptyCard);
     Table.setBoard([
       `${dealerHand[0]}`,
       `${dealerHand[1]}`,
@@ -115,7 +118,6 @@ const Results = ({ userHand, dealerHand, playerCount }) => {
       `${dealerHand[3]}`,
     ]);
   } else if (amountOfEmptyCard === 0) {
-    console.log('Flag 3', amountOfEmptyCard);
     Table.setBoard([
       `${dealerHand[0]}`,
       `${dealerHand[1]}`,

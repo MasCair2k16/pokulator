@@ -22,7 +22,7 @@ import {
 
 /**
  * TODO: Display percentages in right order - medium
- * TODO: get appicon - easy
+ * TODO: get appicon - easy - DONE
  * TODO: App crashes unexpectedly when clickin on a cards - medium
  * TODO: Modify dealer cards in modal - easy
  * TODO: Fix the key in lists - easy
@@ -124,10 +124,10 @@ const App = () => {
             </Section>
           </View>
           <Section
-            title={`Your chances vs \t\t\t  ${
+            title={`Your chances vs \t\t  ${
               playerCount - 1 > 1
                 ? `${playerCount - 1} players`
-                : `\t${playerCount - 1} player`
+                : `${playerCount - 1} player`
             }`}
           >
             <Results
